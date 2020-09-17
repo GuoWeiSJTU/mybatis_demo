@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cetc.mapper.UsersMapper">
+    <select id="selectList" resultType="Users">
+        select * from users
+    </select>
+   <!-- <insert id="insert">
+        insert into users(name,pwd) values('fffff','ddddd')
+    </insert>-->
+    <insert id="insert" parameterType="users">
+        insert into users(name,pwd) values(#{name},#{pwd})
+    </insert>
+    <delete id="delete" parameterType="int">
+        delete from users where id=#{id}
+    </delete>
+    <select id="selectById" parameterType="int" resultType="users">
+        select * from users where id=#{id}
+    </select>
+    <update id="update" parameterType="users">
+        update users set name=#{name},pwd=#{pwd},lasttime=#{lasttime} where id =#{id}
+    </update>
+    <select id="selectByExample" parameterType="Users" resultType="Users">
+        select * from users
+        <where>
+            <if test="name!=null and name!=''">
+                and name like '%${name}%'
+            </if>
+            <if test="pwd!=null and pwd!=''">
+                and pwd=#{pwd}
+            </if>
+            <if test="lasttime!=null and lasttime!=''">
+                and lasttime like '%${lasttime}%'
+            </if>
+        </where>
+
+    </select>
+    <delete id="deleteCheckObj" parameterType="users">
+        delete from users
+        <!--where id in (8,10,11)-->
+        <where>
+            <foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+
+    </delete>
+    <delete id="deleteCheck" parameterType="int">
+        delete from users
+        <!--where id in (8,10,11)-->
+        <where>
+            <foreach collection="list" item="id" open="and id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+
+    </delete>
+    <delete id="deleteCheckArray" parameterType="int">
+        delete from users
+        <!--where id in (8,10,11)-->
+        <where>
+            <foreach collection="array" item="id" open="and id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+
+    </delete>
+    <select id="selectByPage" parameterType="Page" resultType="Users">
+        select * from users limit #{start},#{size}
+    </select>
+    <select id="selectByPageMulArg" resultType="Users">
+        select * from users limit #{start},#{size}
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+

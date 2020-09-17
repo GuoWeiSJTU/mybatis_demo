@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cetc.mapper.DriverMapper">
+    <resultMap id="rt" type="DriverQuery">
+        <id property="did" column="did"></id>
+        <result property="dtype" column="dtype"></result>
+        <association property="person" javaType="Person">
+            <id property="pid" column="pid"></id>
+            <result property="pname" column="pname"></result>
+            <result property="age" column="age"></result>
+        </association>
+    </resultMap>
+    <resultMap id="rt1" type="DriverQuery" autoMapping="true">
+        <id property="did" column="did"></id>
+        <association property="person" javaType="Person" autoMapping="true">
+            <id property="pid" column="pid"></id>
+        </association>
+    </resultMap>
+    <select id="selectList" resultMap="rt1">
+        SELECT p.*,d.* FROM person p JOIN driverinfo d
+        ON p.pid=d.pid
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+

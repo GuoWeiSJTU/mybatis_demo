@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cetc.mapper.PlayerMapper">
+    <resultMap id="rq" type="Player" autoMapping="true">
+        <id column="pid" property="pid"></id>
+        <association property="team" javaType="Team" autoMapping="true">
+            <id column="tid" property="tid"></id>
+        </association>
+    </resultMap>
+    <select id="selectByName" resultMap="rq" parameterType="string">
+        SELECT t.*,p.* FROM team t,player p
+        WHERE t.tid=p.tid and p.pname like '%${pname}%'
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
